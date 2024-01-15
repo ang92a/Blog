@@ -1,17 +1,17 @@
 const React = require('react');
 const Layout = require('./Layout');
-const EntryPage = require('./EntryPage');
+const Entry = require('./EntryOne');
 const AddForm = require('./AddForm');
 
-function EntriesPage({ title, data }) {
+function EntriesPage({ title, data, user }) {
   return (
-    <Layout title={title}>
+    <Layout title={title} user={user}>
       <div className="container">
         <AddForm />
         <h1 style={{ textAlign: 'center' }}>Список постов</h1>
         <div className="postsContainer">
           {data.map((entry) => (
-            <EntryPage entry={entry} />
+            <Entry entry={entry} />
           ))}
         </div>
       </div>

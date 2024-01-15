@@ -1,5 +1,4 @@
 const addForm = document.querySelector('#addForm');
-console.log(addForm);
 if (addForm) {
   addForm.addEventListener('submit', async (e) => {
     e.preventDefault();

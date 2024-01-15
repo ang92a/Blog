@@ -1,11 +1,12 @@
 const router = require('express').Router();
 const EntriesPage = require('../componts/EntriesPage');
-const EntryPage = require('../componts/EntryPage');
+const EntryOne = require('../componts/EntryOne');
 
 const { EntryTag, Entry, Tag } = require('../db/models');
 
 // все записи
 router.get('/', async (req, res) => {
+  console.log(res.locals.user, 33333333);
   const data = await Entry.findAll({
     order: [['id', 'ASC']],
     // raw: true,
@@ -14,7 +15,12 @@ router.get('/', async (req, res) => {
       include: Tag,
     },
   });
-  const html = res.renderComponent(EntriesPage, { title: 'title', data });
+
+  const html = res.renderComponent(EntriesPage, {
+    title: 'title',
+    data,
+    user: res.locals.user,
+  });
   // console.log(data);
   res.send(html);
 });
@@ -28,7 +34,7 @@ router.get('/:paramId', async (req, res) => {
     raw: true,
   });
   // console.log(entry.id, 'entryId');
-  const html = res.renderComponent(EntryPage, { title: 'title', entry });
+  const html = res.renderComponent(EntryOne, { title: 'title', entry });
   res.send(html);
 });
 
@@ -39,7 +45,7 @@ router.post('/', async (req, res) => {
     const newEntry = await Entry.create({ title, body });
     // console.log(newEntry);
     const html = res.renderComponent(
-      EntryPage,
+      EntryOne,
       { entry: newEntry },
       { doctype: false }
     );
